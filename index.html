@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREST Lab — Communication Research and Engagement for Science and Technology</title>
+<meta name="description" content="CREST Lab is directed by Christopher D. Wirz at the University of Illinois Urbana-Champaign, studying how science and technology can be developed and communicated in ways that serve people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --bg-panel: #FFFFFF;
+    --bg-panel-2: #EFEDE8;
+    --ink: #13294B;
+    --ink-dim: #46536A;
+    --line: #13294B;
+    --amber: #FF5F05;
+    --amber-text: #C84113;
+    --sky: #1D58A7;
+    --moss: #006230;
+    --storm: #707372;
+    --storm-dark: #252525;
+    --harvest: #FCB316;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 18.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin: 0 0 0.4em 0;
+    letter-spacing: -0.01em;
+  }
+
+  a{ color: var(--amber-text); }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Nav */
+  nav{
+    position: sticky;
+    top: 0;
+    background: var(--storm-dark);
+    z-index: 10;
+    overflow: hidden;
+  }
+  .topo-lines{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  nav .wrap{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    position: relative;
+  }
+  .nav-name{
+    font-family:'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    padding-bottom: 4px;
+    border-bottom: 3px solid var(--amber);
+    white-space: nowrap;
+  }
+  .nav-mark{ flex-shrink:0; }
+  .nav-links{
+    display:flex;
+    gap: 20px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .nav-links a{
+    color: #FFFFFF;
+    text-decoration:none;
+  }
+  .nav-links a:hover{ color: var(--amber); }
+
+  /* Hero */
+  header.hero{
+    background: #FFFFFF;
+  }
+  .hero-top{
+    padding: 48px 0 32px 0;
+  }
+  .full-name{
+    font-size: 2.5rem;
+    color: var(--storm-dark);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 24px 0;
+  }
+  h1.title{
+    font-size: 3.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--ink);
+    padding-bottom: 18px;
+    border-bottom: 6px solid var(--amber);
+    display: block;
+    width: fit-content;
+  }
+  .focus-line{
+    font-size: 1.28rem;
+    line-height: 1.42;
+    color: var(--ink);
+  }
+
+  .hero-pi-zone{
+    position: relative;
+    overflow: hidden;
+    background: var(--ink);
+    padding: 32px 0 56px 0;
+  }
+  .hero-pi-zone .wrap{ position: relative; }
+  .pi-label-onblue{
+    display:block;
+    color: #FFFFFF;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 14px 0;
+  }
+
+  .pi-block{
+    display:flex;
+    align-items:flex-start;
+    gap: 26px;
+    padding: 24px 26px;
+    background: var(--bg-panel);
+    border: 2.5px solid var(--ink);
+    border-radius: 4px;
+    box-shadow: 8px 8px 0 var(--amber);
+    flex-wrap: wrap;
+  }
+  .pi-block-compact{
+    margin-top: 0;
+    padding: 16px 22px;
+    gap: 18px;
+    align-items: center;
+    box-shadow: 8px 8px 0 var(--harvest);
+  }
+  .pi-block-compact .pi-name{
+    font-size: 1.15rem;
+  }
+  .pi-block-compact .pi-title{
+    font-size: 0.9rem;
+  }
+  .pi-block-compact .pi-links{
+    margin-top: 6px;
+  }
+  .pi-block-compact .pi-links a{
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+  .pi-detail-lines{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 4px 0 10px 0;
+  }
+  .pi-line{
+    font-size: 1.02rem;
+    color: var(--ink-dim);
+    line-height: 1.4;
+  }
+  .pi-line-name{
+    font-family:'Montserrat', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+  }
+  .pi-line-title{
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .pi-pronouns{
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
+    color: var(--ink-dim);
+  }
+  .pi-photo{
+    flex-shrink:0;
+    width: 168px;
+    height: 210px;
+    border-radius: 6px;
+    background: var(--bg-panel-2);
+    border: 2px solid var(--ink);
+    object-fit: cover;
+    object-position: center 20%;
+  }
+  .pi-info{
+    display:flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 240px;
+  }
+  .pi-name{
+    font-family:'Montserrat', serif;
+    font-weight: 600;
+    font-size: 1.45rem;
+    color: var(--ink);
+  }
+  .pi-title{
+    font-size: 1rem;
+    color: var(--ink-dim);
+  }
+  .pi-title .div{ color: var(--line); margin: 0 6px; }
+  .pi-bio{
+    font-size: 1.12rem;
+    color: var(--ink);
+    max-width: 58ch;
+    margin: 10px 0 4px 0;
+  }
+  .pi-bio-full{
+    flex-basis: 100%;
+    max-width: none;
+    margin: -10px 0 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .pi-links{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .pi-links a{
+    text-decoration:none;
+    color: var(--ink);
+    background: var(--bg-panel-2);
+    border: 2px solid var(--ink);
+    padding: 7px 13px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+  }
+  .pi-links a:hover{
+    background: var(--amber);
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .pi-photo-empty{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Montserrat', serif;
+    font-size: 2.2rem;
+    color: var(--ink-dim);
+  }
+  .profile-grid{
+    display:grid;
+    gap: 16px;
+  }
+
+  /* Sections */
+  section{
+    padding: 48px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type{ border-bottom: none; }
+  section h2{
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 6px solid var(--amber);
+    display: block;
+    width: fit-content;
+  }
+
+  .themes{
+    display:grid;
+    gap: 14px;
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .themes li{
+    background: var(--bg-panel);
+    border: 2px solid var(--ink);
+    border-left: 6px solid var(--harvest);
+    border-radius: 4px;
+    padding: 16px 18px;
+    box-shadow: 6px 6px 0 var(--harvest);
+  }
+  .themes li strong{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--amber-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .themes li strong svg{ flex-shrink:0; }
+
+  /* Publications */
+  .pub-highlight{
+    display:grid;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .pub-card{
+    background: var(--bg-panel);
+    border: 2px solid var(--ink);
+    border-left: 6px solid var(--amber);
+    border-radius: 4px;
+    padding: 16px 18px;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .pub-box-journal{
+    border-left-color: var(--moss);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .pub-box-research{
+    border-left-color: #1D58A7;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .pub-card .pub-title{
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .pub-card .pub-meta{
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+  }
+  .pub-card .pub-meta a{
+    color: var(--sky);
+  }
+
+  .subhead{
+    display: inline-flex;
+    align-items:center;
+    gap: 7px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: var(--ink);
+    border-left: 3px solid var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 0 0 14px 0;
+  }
+
+  /* People section sits on solid navy — flip label chip to yellow/navy with orange accent so it doesn't vanish */
+  #people{ position: relative; overflow: hidden; }
+  #people .wrap{ position: relative; }
+  #people h2{ color: #FFFFFF; }
+  #people .subhead{
+    background: var(--harvest);
+    color: var(--ink);
+    border-left: 3px solid var(--amber);
+  }
+
+  /* Join section sits on solid yellow — navy text passes contrast fine */
+  #join{ position: relative; overflow: hidden; }
+  #join .wrap{ position: relative; }
+  #join p{ color: var(--ink); }
+  #join a{ color: var(--ink); text-decoration: underline; }
+
+  #pub-list-journal, #pub-list-other{
+    display:grid;
+    gap: 8px;
+    list-style:none;
+    padding:0;
+    margin:0;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  #pub-list-journal li, #pub-list-other li{
+    font-size: 1rem;
+    color: var(--ink-dim);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  #pub-list-journal li:last-child, #pub-list-other li:last-child{ border-bottom: none; }
+  #pub-list-journal .pl-year, #pub-list-other .pl-year{
+    font-family:'IBM Plex Mono', monospace;
+    color: var(--sky);
+    margin-right: 8px;
+  }
+  #pub-list-journal a, #pub-list-other a{ color: var(--ink); }
+  #pub-list-journal a:hover, #pub-list-other a:hover{ color: var(--amber-text); }
+  .pub-status{
+    font-size: 0.9rem;
+    color: var(--ink-dim);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  footer{
+    position: relative;
+    overflow: hidden;
+    padding: 24px 0;
+    margin-top: 8px;
+    background: var(--storm-dark);
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  footer .wrap{
+    position: relative;
+  }
+
+  @media (max-width: 560px){
+    h1.title{ font-size: 2.4rem; }
+    .full-name{ font-size: 1.5rem; }
+    .nav-links{ gap: 14px; font-size: 0.82rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <svg class="topo-lines" viewBox="0 0 800 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 50 Q100 20 200 50 T400 45 T600 55 T800 40" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M0 30 Q100 5 200 30 T400 25 T600 35 T800 15" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <path d="M0 60 Q100 40 200 60 T400 58 T600 63 T800 52" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+  </svg>
+  <div class="wrap">
+    <a class="nav-name" href="#top">
+      <svg class="nav-mark" width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1 19 L7 7 L11 12 L15 4 L22 19 Z" fill="#FFFFFF"/>
+        <circle cx="15" cy="4" r="2" fill="#FF5F05"/>
+        <line x1="1" y1="19" x2="22" y2="19" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      CREST Lab
+    </a>
+    <div class="nav-links">
+      <a href="#research">Research</a>
+      <a href="#people">People</a>
+      <a href="#publications">Publications</a>
+      <a href="#join">Join</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-top">
+    <h1 class="title">CREST Lab</h1>
+    <p class="full-name" id="full-name">Communication Research and Engagement for Science and Technology</p>
+    <p class="focus-line">Our work examines how scientific knowledge and technology can be developed, communicated, and applied in ways that serve people. We combine rigorous social science, user engagement, and interdisciplinary collaboration to understand what makes information and innovation trustworthy, useful, and responsive to the contexts in which people make decisions.</p>
+  </div>
+
+  <div class="hero-pi-zone">
+    <svg class="topo-lines" viewBox="0 0 800 240" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M0 190 Q100 150 200 190 T400 180 T600 195 T800 170" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M0 150 Q100 105 200 150 T400 140 T600 155 T800 130" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.35"/>
+      <path d="M0 60 Q120 25 240 60 T480 50 T720 65 T800 55" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+    </svg>
+    <div class="wrap">
+      <span class="pi-label-onblue">Led by</span>
+      <div class="pi-block pi-block-compact">
+        <img class="pi-photo" src="images/wirz-headshot.jpg" alt="Christopher D. Wirz">
+        <div class="pi-info">
+          <div class="pi-detail-lines">
+            <span class="pi-line pi-line-name">Christopher D. Wirz <span class="pi-pronouns">(he/him)</span></span>
+            <span class="pi-line pi-line-title">Assistant Professor &amp; Extension Specialist</span>
+            <span class="pi-line">University of Illinois Urbana-Champaign</span>
+            <span class="pi-line">College of Agricultural, Consumer and Environmental Sciences (ACES)</span>
+            <span class="pi-line">Agricultural Leadership, Education and Communications (ALEC)</span>
+          </div>
+          <div class="pi-links">
+            <a href="mailto:wirz@illinois.edu">Email</a>
+            <a href="https://alec.illinois.edu/directory/wirz" target="_blank" rel="noopener">Faculty profile</a>
+            <a href="https://scholar.google.com/citations?user=cOo6NF8AAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/christopher-wirz-22b324b8/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="research">
+  <div class="wrap">
+    <h2>Our Research</h2>
+    <p style="margin-bottom:24px;">Our main focus right now is on understanding the societal implications of emerging AI tools and predictions in agriculture, weather, and the environmental sciences. We are studying how communication, engagement, and workforce development can support more human-centered approaches to developing and implementing future tools. Across this work, trust and trustworthiness are major themes in how people make sense of and make decisions about new tools.</p>
+
+    <p class="subhead">What this looks like</p>
+    <ul class="themes">
+      <li style="border-left-color:#1D58A7; box-shadow:6px 6px 0 #1D58A7;"><strong><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="#1D58A7" stroke-width="1.4"/><line x1="10.3" y1="10.3" x2="14" y2="14" stroke="#1D58A7" stroke-width="1.4" stroke-linecap="round"/></svg>Rigorous social science research</strong>We use theory-driven, empirical research to build generalizable knowledge about how people understand, evaluate, and make decisions about science and technology.</li>
+      <li style="border-left-color:#FCB316; box-shadow:6px 6px 0 #FCB316;"><strong><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="3.5" cy="3.5" r="1.8" stroke="#FCB316" stroke-width="1.3"/><circle cx="12.5" cy="3.5" r="1.8" stroke="#FCB316" stroke-width="1.3"/><circle cx="8" cy="12.5" r="1.8" stroke="#FCB316" stroke-width="1.3"/><line x1="5" y1="4.5" x2="7" y2="10.8" stroke="#FCB316" stroke-width="1.2"/><line x1="11" y1="4.5" x2="9" y2="10.8" stroke="#FCB316" stroke-width="1.2"/><line x1="5.3" y1="3.5" x2="10.7" y2="3.5" stroke="#FCB316" stroke-width="1.2"/></svg>Interdisciplinary collaboration</strong>We work with technical and applied experts to bring communication, social science, and human-centered perspectives into the development and implementation of new information, tools, and technologies.</li>
+      <li style="border-left-color:#006230; box-shadow:6px 6px 0 #006230;"><strong><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5C8 1.5 3.5 4 3.5 8.5C3.5 11.3 5.5 13.5 8 13.5C10.5 13.5 12.5 11.3 12.5 8.5C12.5 4 8 1.5 8 1.5Z" stroke="#006230" stroke-width="1.3" stroke-linejoin="round"/><line x1="8" y1="6.5" x2="8" y2="11.5" stroke="#006230" stroke-width="1.2" stroke-linecap="round"/></svg>Responsive Extension</strong>We learn directly from decision makers and communities, translate research into useful resources and programming, and respond to emerging needs in practice.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="people" style="background: #13294B;">
+  <svg class="topo-lines" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 70 Q100 30 200 70 T400 60 T600 75 T800 55" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M0 160 Q80 200 160 160 T320 170 T480 155 T640 175 T800 160" stroke="#FFFFFF" stroke-width="1.4" fill="none" opacity="0.28"/>
+    <path d="M0 280 Q150 220 300 280 T600 265 T800 285" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <path d="M0 400 Q100 445 200 400 T400 415 T600 390 T800 420" stroke="#FFFFFF" stroke-width="1.3" fill="none" opacity="0.25"/>
+    <path d="M0 510 Q140 470 280 510 T560 495 T800 515" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.3"/>
+    <path d="M0 630 Q110 665 220 630 T440 645 T660 620 T800 640" stroke="#FFFFFF" stroke-width="1.3" fill="none" opacity="0.22"/>
+  </svg>
+  <div class="wrap">
+    <h2>People</h2>
+
+    <p class="subhead">Lead</p>
+    <div class="profile-grid">
+      <div class="pi-block">
+        <img class="pi-photo" src="images/wirz-headshot.jpg" alt="Christopher D. Wirz">
+        <div class="pi-info">
+          <div class="pi-detail-lines">
+            <span class="pi-line pi-line-name">Christopher D. Wirz <span class="pi-pronouns">(he/him)</span></span>
+            <span class="pi-line pi-line-title">Assistant Professor &amp; Extension Specialist</span>
+            <span class="pi-line">University of Illinois Urbana-Champaign</span>
+            <span class="pi-line">College of Agricultural, Consumer and Environmental Sciences (ACES)</span>
+            <span class="pi-line">Agricultural Leadership, Education and Communications (ALEC)</span>
+          </div>
+          <div class="pi-links">
+            <a href="mailto:wirz@illinois.edu">Email</a>
+            <a href="https://alec.illinois.edu/directory/wirz" target="_blank" rel="noopener">Faculty profile</a>
+            <a href="https://scholar.google.com/citations?user=cOo6NF8AAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/christopher-wirz-22b324b8/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+        <p class="pi-bio pi-bio-full">Christopher Wirz (he/him) is an Assistant Professor of Risk and Science Communication and Extension Specialist at the University of Illinois Urbana-Champaign. His current research focuses on communication among different decision makers and publics in the face of environmental risks and technologies. His recent work has focused on weather hazards and the development of use-inspired AI for environmental decision making. As he joins the Agricultural Leadership, Education, and Communication program and Extension at the University of Illinois, he is expanding this work into food and environmental systems.</p>
+      </div>
+    </div>
+
+    <p class="subhead" style="margin-top:22px;">Graduate Students</p>
+    <div class="profile-grid">
+      <!-- Add another card per student. Duplicate this block:
+           - swap the <div class="pi-photo pi-photo-empty"> for an <img class="pi-photo" src="images/STUDENT.jpg">
+           - fill in name, title/focus, bio, and links (drop any link rows that don't apply) -->
+      <div class="pi-block">
+        <div class="pi-photo pi-photo-empty" aria-hidden="true">CM</div>
+        <div class="pi-info">
+          <span class="pi-name">Cade McCallen</span>
+          <span class="pi-title">Master's Student, Natural Resources and Environmental Sciences (NRES)</span>
+          <div class="pi-links">
+            <a href="mailto:cadefm2@illinois.edu">Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <h2>Publications</h2>
+
+    <p class="subhead">Highlighted</p>
+    <div class="pub-highlight">
+      <div class="pub-card">
+        <div class="pub-title">(Re)Conceptualizing trustworthy AI: A foundation for change</div>
+        <div class="pub-meta">Wirz, C.D., Demuth, J.L., Bostrom, A., Cains, M.G., Ebert-Uphoff, I., Gagne II, D.J., Schumacher, A., McGovern, A., &amp; Madlambayan, D. · Artificial Intelligence, 342, 104309 (2025) · <a href="https://doi.org/10.1016/j.artint.2025.104309" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-title">National Weather Service (NWS) forecasters' perceptions of AI/ML and its use in operational forecasting</div>
+        <div class="pub-meta">Wirz, C.D., Demuth, J.L., Cains, M.G., White, M., Radford, J., &amp; Bostrom, A. · Bulletin of the American Meteorological Society, 105(11), E2194–E2215 (2024) · <a href="https://doi.org/10.1175/BAMS-D-24-0044.1" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+      <div class="pub-card">
+        <div class="pub-title">Increasing the reproducibility and replicability of supervised AI/ML in the Earth systems science by leveraging social science methods</div>
+        <div class="pub-meta">Wirz, C.D., Sutter, C., Demuth, J.L., Mayer, K.J., Chapman, W.E., Cains, M.G., ... &amp; Thorncroft, C. · Earth and Space Science, 11(7), e2023EA003364 (2024) · <a href="https://doi.org/10.1029/2023EA003364" target="_blank" rel="noopener">DOI</a></div>
+      </div>
+    </div>
+
+    <p class="subhead">Full List</p>
+    <div class="pub-card pub-box-journal">
+      <p class="subhead" style="margin-top:0;">Journal articles</p>
+      <ul id="pub-list-journal">
+        <li class="pub-status">Loading publications from ORCID…</li>
+      </ul>
+    </div>
+
+    <div class="pub-card pub-box-research" style="margin-top:16px;">
+      <p class="subhead" style="margin-top:0;">Research materials and other scholarly outputs</p>
+      <ul id="pub-list-other">
+        <li class="pub-status">Loading…</li>
+      </ul>
+      <p class="pub-status" style="margin-top:10px;">Source: <a href="https://orcid.org/0000-0002-8990-5505" target="_blank" rel="noopener">ORCID 0000-0002-8990-5505</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="join" style="background: #FCB316;">
+  <svg class="topo-lines" viewBox="0 0 800 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 60 Q120 20 240 60 T480 50 T720 65 T800 55" stroke="#13294B" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M0 140 Q120 100 240 140 T480 130 T720 145 T800 135" stroke="#13294B" stroke-width="1.5" fill="none" opacity="0.3"/>
+    <path d="M0 210 Q120 175 240 210 T480 200 T720 215 T800 205" stroke="#13294B" stroke-width="1.5" fill="none" opacity="0.25"/>
+  </svg>
+  <div class="wrap">
+    <h2>Join the Lab</h2>
+    <div class="pub-card">
+      <p style="margin:0;">CREST is a new and growing lab. We're always glad to hear from prospective graduate students and undergraduates interested in user-engaged, interdisciplinary social science research on risk communication, trustworthy AI, or science communication more broadly.</p>
+      <p style="margin:14px 0 0 0;">If you're interested in joining, reach out with a short note about your background and interests.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="topo-lines" viewBox="0 0 800 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 20 Q100 45 200 20 T400 25 T600 15 T800 30" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.5"/>
+    <path d="M0 40 Q100 60 200 40 T400 45 T600 35 T800 50" stroke="#FFFFFF" stroke-width="1.5" fill="none" opacity="0.35"/>
+  </svg>
+  <div class="wrap">
+    &copy; <span id="year"></span> CREST Lab — Christopher D. Wirz
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const ORCID_ID = '0000-0002-8990-5505';
+  const journalList = document.getElementById('pub-list-journal');
+  const otherList = document.getElementById('pub-list-other');
+
+  fetch(`https://pub.orcid.org/v3.0/${ORCID_ID}/works`, {
+    headers: { 'Accept': 'application/json' }
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('ORCID request failed');
+      return res.json();
+    })
+    .then(data => {
+      const groups = data.group || [];
+      const works = groups.map(g => {
+        const w = g['work-summary'][0];
+        const title = w.title && w.title.title ? w.title.title.value : 'Untitled';
+        const year = w['publication-date'] && w['publication-date'].year ? w['publication-date'].year.value : null;
+        const journal = w['journal-title'] ? w['journal-title'].value : null;
+        const type = w.type || 'other';
+        let doiUrl = null;
+        if (w['external-ids'] && w['external-ids']['external-id']) {
+          const doi = w['external-ids']['external-id'].find(id => id['external-id-type'] === 'doi');
+          if (doi) doiUrl = `https://doi.org/${doi['external-id-value']}`;
+        }
+        return { title, year, journal, doiUrl, type };
+      });
+
+      works.sort((a, b) => (b.year || 0) - (a.year || 0));
+
+      // ORCID work "type" values: journal-article is the exact match for journal articles.
+      // Everything else (dataset, preprint, conference-paper, working-paper, report, etc.)
+      // goes in the second bin.
+      const journalWorks = works.filter(w => w.type === 'journal-article');
+      const otherWorks = works.filter(w => w.type !== 'journal-article');
+
+      const renderList = (el, list, emptyMsg) => {
+        if (list.length === 0) {
+          el.innerHTML = `<li class="pub-status">${emptyMsg}</li>`;
+          return;
+        }
+        el.innerHTML = list.map(w => {
+          const link = w.doiUrl
+            ? `<a href="${w.doiUrl}" target="_blank" rel="noopener">${w.title}</a>`
+            : w.title;
+          const journalText = w.journal ? ` — ${w.journal}` : '';
+          return `<li><span class="pl-year">${w.year || 'n.d.'}</span>${link}${journalText}</li>`;
+        }).join('');
+      };
+
+      renderList(journalList, journalWorks, 'No journal articles found on ORCID yet.');
+      renderList(otherList, otherWorks, 'No other outputs found on ORCID yet.');
+    })
+    .catch(() => {
+      const failMsg = '<li class="pub-status">Could not load ORCID data right now. <a href="https://orcid.org/0000-0002-8990-5505" target="_blank" rel="noopener">View directly on ORCID</a>.</li>';
+      journalList.innerHTML = failMsg;
+      otherList.innerHTML = failMsg;
+    });
+</script>
+
+</body>
+</html>
